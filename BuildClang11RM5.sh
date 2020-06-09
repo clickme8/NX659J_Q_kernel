@@ -27,8 +27,7 @@ DEFCONFIG="NX659J_defconfig"
 
 # Paths
 KERNEL_DIR=`pwd`
-ZIMAGE_DIR="${HOME}/RM5G/
-/out-clang/arch/arm64/boot/"
+ZIMAGE_DIR="~/RM5G/out-clang/arch/arm64/boot/"
 
 # Kernel Details
 VER=".1.0"
@@ -66,3 +65,7 @@ echo "Time: $(($DIFF / 60)) minute(s) and $(($DIFF % 60)) seconds."
 echo
 cd $ZIMAGE_DIR
 ls -a
+
+# Make a dtb file
+find ~/RM5G/out-clang/arch/arm64/boot/dts/vendor/qcom -name '*.dtb' -exec cat {} + > ~/RM5G/out-clang/arch/arm64/boot/dtb
+
