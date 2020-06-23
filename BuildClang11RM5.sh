@@ -68,4 +68,7 @@ ls -a
 
 # Make a dtb file
 find ~/RM5G/out-clang/arch/arm64/boot/dts/vendor/qcom -name '*.dtb' -exec cat {} + > ~/RM5G/out-clang/arch/arm64/boot/dtb
+cd ~/RM5G/out-clang/arch/arm64/boot/
+ls -a
 
+# Put dtb and Image.gz in an AnyKernel3 zip archive and flash from TWRP
