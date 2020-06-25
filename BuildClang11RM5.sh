@@ -30,10 +30,10 @@ KERNEL_DIR=`pwd`
 ZIMAGE_DIR="~/RM5G/out-clang/arch/arm64/boot/"
 
 # Kernel Details
-VER=".1.0"
+VER=".Beta.1.15"
 
 # Vars
-BASE_AK_VER="MOD-Kernel-Stock"
+BASE_AK_VER="MOD-RM5G-GPUOC"
 AK_VER="$BASE_AK_VER$VER"
 export LOCALVERSION=~`echo $AK_VER`
 export ARCH=arm64
@@ -67,8 +67,16 @@ cd $ZIMAGE_DIR
 ls -a
 
 # Make a dtb file
-find ~/RM5G/out-clang/arch/arm64/boot/dts/vendor/qcom -name '*.dtb' -exec cat {} + > ~/RM5G/out-clang/arch/arm64/boot/dtb
+#find ~/RM5G/out-clang/arch/arm64/boot/dts/vendor/qcom -name '*.dtb' -exec cat {} + > ~/RM5G/out-clang/arch/arm64/boot/dtb
+cat dts/vendor/qcom/kona.dtb dts/vendor/qcom/kona-v2.dtb dts/vendor/qcom/kona-v2.1.dtb > dtb
 cd ~/RM5G/out-clang/arch/arm64/boot/
 ls -a
 
 # Put dtb and Image.gz in an AnyKernel3 zip archive and flash from TWRP
+AK_ZIP="$AK_VER.zip"
+cp dtb ~/AnyKernel3/
+cp Image.gz ~/AnyKernel3/
+cd ~/AnyKernel3/
+zip -r9 ${AK_ZIP} .
+ls *.zip
+mv ${AK_ZIP} ~/
