@@ -30,7 +30,7 @@ KERNEL_DIR=`pwd`
 ZIMAGE_DIR="~/RM5G/out-clang/arch/arm64/boot/"
 
 # Kernel Details
-VER=".Beta.1.15"
+VER="-Beta1.15"
 
 # Vars
 BASE_AK_VER="MOD-RM5G-GPUOC"
@@ -68,8 +68,8 @@ ls -a
 
 # Make a dtb file
 #find ~/RM5G/out-clang/arch/arm64/boot/dts/vendor/qcom -name '*.dtb' -exec cat {} + > ~/RM5G/out-clang/arch/arm64/boot/dtb
-cat dts/vendor/qcom/kona.dtb dts/vendor/qcom/kona-v2.dtb dts/vendor/qcom/kona-v2.1.dtb > dtb
 cd ~/RM5G/out-clang/arch/arm64/boot/
+cat dts/vendor/qcom/kona.dtb dts/vendor/qcom/kona-v2.dtb dts/vendor/qcom/kona-v2.1.dtb > dtb
 ls -a
 
 # Put dtb and Image.gz in an AnyKernel3 zip archive and flash from TWRP
