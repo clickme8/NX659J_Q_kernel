@@ -44,6 +44,8 @@
 #include <linux/stat.h>
 #include <linux/cpumask.h>
 
+#define CPUMASK_ALL (BIT(NR_CPUS) - 1)
+
 #define CREATE_TRACE_POINTS
 #include <trace/events/fastrpc.h>
 
@@ -3994,7 +3996,7 @@ static int fastrpc_internal_control(struct fastrpc_file *fl,
 {
 	int err = 0;
 	unsigned int latency;
-	cpumask_t mask;
+	cpumask_t *mask;
 	struct fastrpc_apps *me = &gfa;
 	u32 len = me->silvercores.corecount, i = 0;
 
@@ -4012,11 +4014,14 @@ static int fastrpc_internal_control(struct fastrpc_file *fl,
 		VERIFY(err, latency != 0);
 		if (err)
 			goto bail;
-		cpumask_clear(&mask);
+
 		for (i = 0; i < len; i++)
-			cpumask_set_cpu(me->silvercores.coreno[i], &mask);
+			&mask |= BIT(me->silvercores.coreno[i]);
+			/*cpumask_set_cpu(, &mask); */
 		fl->pm_qos_req.type = PM_QOS_REQ_AFFINE_CORES;
-		cpumask_copy(&fl->pm_qos_req.cpus_affine, &mask);
+		
+		atomic_set(&fl->pm_qos_req.cpus_affine, *cpumask_bits(mask));
+		/*cpumask_copy(&fl->pm_qos_req.cpus_affine, &mask);*/
 
 		if (!fl->qos_request) {
 			pm_qos_add_request(&fl->pm_qos_req,
